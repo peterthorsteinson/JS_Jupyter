@@ -11,3 +11,7 @@ You will need Node.js installed in your computer to be able to run.
 * Clone this repo.
 * `cd GameOfLife`
 * `node GameOfLife.js sample1.gol`
+
+# Input binary file
+
+* sample1.gol is two bytes for number of rows and columns, followed by rows*columns bytes where 0 is a dead cell and 1 is a live cell.
