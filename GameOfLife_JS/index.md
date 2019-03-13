@@ -14,4 +14,4 @@ You will need Node.js installed in your computer to be able to run.
 
 # Input binary file
 
-* sample1.gol is two bytes for number of rows and columns, followed by rows*columns bytes where 0 is a dead cell and 1 is a live cell.
+The binary input file named sample1.gol contains two leading bytes for the number of rows and columns respectively, followed by a sequence of rows*columns bytes where each byte is either a 0 for a dead cell or a 1 for a live cell.
