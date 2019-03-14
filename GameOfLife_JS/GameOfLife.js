@@ -68,7 +68,7 @@ class GameOfLife {
                 else if (this.grid[i][j] !== 0 && liveNeighborCount > 3) {
                     temp_grid[i][j] = 0;
                 }
-                // Dead cell with 3 live neighbors becomes live(gets birthed)
+                // Dead cell with 3 live neighbors becomes live (gets born)
                 else if (this.grid[i][j] === 0 && liveNeighborCount === 3) {
                     temp_grid[i][j] = 1;
                 }
