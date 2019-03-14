@@ -10,6 +10,8 @@ You will need Node.js installed in your computer to be able to run.
 
 * Clone this repo.
 * `cd GameOfLife`
+* `npm init`
+* `npm install --save readline-sync`
 * `node GameOfLife.js sample1.gol`
 
 # Input binary file
