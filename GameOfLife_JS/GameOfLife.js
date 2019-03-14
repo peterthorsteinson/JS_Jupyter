@@ -11,7 +11,7 @@ class GameOfLife {
         this.cols = 0;
     }
 
-    getGrid(x, y, data) { // get array of arrays
+    initGrid(x, y, data) { // initialize grid as array of arrays
         this.rows = x;
         this.cols = y;
         let offset = 2;
@@ -137,7 +137,7 @@ function main() {
         // y to the "column" if you want to view the
         // structure that way.
         console.log("\nGrid size %d, %d.\n", x, y);
-        gol.getGrid(x, y, data);        
+        gol.initGrid(x, y, data);        
         gol.printGrid();
 
         // Now, we will accept input in a loop until the user
