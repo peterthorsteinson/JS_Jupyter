@@ -4,7 +4,7 @@ var fs = require('fs');
 var readlineSync = require('readline-sync');
 
 class GameOfLife {
-    // Constructor that sets up instance variables with default values
+    // Constructor sets up instance variables with default values
     constructor() {
         this.grid = [];
         this.rows = 0;
@@ -27,11 +27,11 @@ class GameOfLife {
     printGrid() {
         for (let i = 0; i < this.rows; i++) {
             for (let j = 0; j < this.cols; j++) {
-                process.stdout.write(this.grid[i][j] + " "); // no newline!
+                process.stdout.write(this.grid[i][j] + " "); // no newline
             }
-            console.log("");
+            console.log(""); // newline
         }
-        console.log("");
+        console.log(""); // newline
     }
 
     saveGrid(file) {
@@ -47,7 +47,7 @@ class GameOfLife {
     }
     
     mutateGrid() {
-        //Copy of original grid
+        // Copy of original grid
         let temp_grid = new Array(this.rows);
         for (let i = 0; i < this.rows; i++) {
             temp_grid[i] = new Array(this.cols);
@@ -56,44 +56,44 @@ class GameOfLife {
         for (let i = 0; i < this.rows; i++) {
             for (let j = 0; j < this.cols; j++) {
                 let liveNeighborCount = this.getLiveNeighborCount(i, j);
-                //a cell with less than 2 live neighbors dies
+                // Living cell with less than 2 live neighbors dies
                 if (this.grid[i][j] !== 0 && liveNeighborCount < 2) {
                     temp_grid[i][j] = 0;
                 }
-                //a cell with 2 or 3 live neighbors lives
+                // Living cell with 2 or 3 live neighbors lives
                 else if (this.grid[i][j] !== 0 && (liveNeighborCount === 2 || liveNeighborCount === 3)) {
                     temp_grid[i][j] = 1;
                 }
-                //a cell with greater than 3 live neighbors dies
+                // Living cell with greater than 3 live neighbors dies
                 else if (this.grid[i][j] !== 0 && liveNeighborCount > 3) {
                     temp_grid[i][j] = 0;
                 }
-                // a dead cell with 3 live neighbors becomes live(gets birthed)
+                // Dead cell with 3 live neighbors becomes live(gets birthed)
                 else if (this.grid[i][j] === 0 && liveNeighborCount === 3) {
                     temp_grid[i][j] = 1;
                 }
-                // if we get this far then no changes required, so just copy this element
+                // If we get this far then no rules apply, so just copy element
                 else {
                     temp_grid[i][j] = this.grid[i][j];
                 }
             }
         }
-        this.grid = temp_grid;
+        this.grid = temp_grid; // update original grid
     }
 
-    // Returns the number of live neighbors for cell at this.grid[i][j]
+    // Returns number of live neighbors for cell at this.grid[i][j]
     getLiveNeighborCount(i, j) {
         let liveNeighborCount = 0;
         let x = this.rows;
         let y = this.cols;
-        // check 3 neighbors on row above cell
+        // Check 3 neighbors on row above cell
         if (i-1 >= 0 && j-1 >= 0 && this.grid[i-1][j-1] > 0) liveNeighborCount++;   // test cell up-left
         if (i-1 >= 0             && this.grid[i-1][j]   > 0) liveNeighborCount++;   // test cell up
         if (i-1 >= 0 && j+1 < y  && this.grid[i-1][j+1] > 0) liveNeighborCount++;   // test cell up-right
-        // check 2 neighbors on same row as cell
+        // Check 2 neighbors on same row as cell
         if (j-1 >= 0             && this.grid[i][j-1] > 0) liveNeighborCount++;     // test cell left
         if (j+1 <  y             && this.grid[i][j+1] > 0) liveNeighborCount++;     // test cell right
-        // check 3 neighbors on row below cell
+        // Check 3 neighbors on row below cell
         if (i+1 < x && j-1 >= 0  && this.grid[i+1][j-1] > 0) liveNeighborCount++;    // test cell down-left
         if (i+1 < x              && this.grid[i+1][j] > 0)   liveNeighborCount++;    // test cell down
         if (i+1 < x && j+1 < y   && this.grid[i+1][j+1] > 0) liveNeighborCount++;    // test cell down-right
@@ -115,7 +115,7 @@ function main() {
 
     let gol = new GameOfLife();
 
-    // load buffer with bytes read from the input file.    
+    // Load buffer with bytes read from binary input file.    
     fs.open(process.argv[2], 'r', function (err, fd) {
         let data = [];
         if (err)
@@ -127,27 +127,24 @@ function main() {
                 break;
             data.push(buffer[0]);
         }
-        // The first and second byte in the file is height and width.
+        // First and second byte in binary input file is height and width of grid.
         let x = data[0];
         let y = data[1];
 
-        // grid holds the game board.  The game board
-        // is x arrays of arrays of length y
-        // Notice that here x refers to the "row" and
-        // y to the "column" if you want to view the
-        // structure that way.
+        // Varialbe grid holds the game board.
+        // Game board is x array of arrays of length y.
+        // Notice that x refers to the row and y to the column.
         console.log("\nGrid size %d, %d.\n", x, y);
         gol.initGrid(x, y, data);        
         gol.printGrid();
 
-        // Now, we will accept input in a loop until the user
-        // asks us to quit.
+        // Accept input in loop until user asks to quit.
         while (true) {
             //Takes the input of the user
             let line = readlineSync.question(
                 "Press return for next generation,\n" +
                 "n to iterate multiple times,\n" +
-                "w to save grid to disk,\n" +
+                "w to write grid to disk,\n" +
                 "or q to quit? ");
             line = line.trim().toLowerCase();
             switch (line) {
