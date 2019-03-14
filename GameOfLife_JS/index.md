@@ -9,7 +9,7 @@ You can interact with Game of Life by giving in different input patterns.
 You will need Node.js installed in your computer to be able to run.
 
 * Clone this repo.
-* `cd GameOfLife`
+* `cd GameOfLife_JS`
 * `npm init`
 * `npm install --save readline-sync`
 * `node GameOfLife.js sample1.gol`
